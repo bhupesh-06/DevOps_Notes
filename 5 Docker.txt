@@ -1,0 +1,865 @@
+MONOLITHIC: multiple services are deployed on single server with single database.
+
+MICRO SERVICES: multiple services are deployed on multiple servers with multiple database.
+
+CONTAINERS:
+its same as a server/vm.
+it will not have any operating system.
+os will be on images.
+(SERVER=AMI, CONTAINER=IMAGE)
+
+DOCKER: 
+Its an free & opensource tool.
+it is platform independent.
+used to create, run & deploy applications containers.
+it is introduced on 2013 by solomenhykes & sebastian phal.
+We used GO laguage to develope the docker.
+here we write files on YAML.
+before docker user faced lot of problems, but after docker there is no issues with the application.
+
+
+CONTAINERIZATION:
+Process of packing an application with its dependencies.
+ex: PUBG
+
+os level of virtualization.
+
+VIRTUALIZATION:
+able to create resouce with our hardware properties.	
+
+ARCHITECTURE & COMPONENTS:
+client: it will interact with user
+user gives commands and it will be executed by docker client
+
+daemon: manages the docker components(images, containers, volumes)
+
+host: where we install docker (ex: linux, windows, macos)
+
+Registry: manages the images.
+
+ARCHITECTURE OF DOCKER:
+yum install docker -y    #client
+systemctl start docker	 #client,Engine
+systemctl status docker
+
+
+COMMANDS:
+docker pull ubuntu	: pull ubuntu image
+docker images		: to see list of images
+docker run -it --name cont1 ubuntu : to create a container
+-it (interactive) - to go inside a container
+cat /etc/os-release	: to see os flavour
+
+
+apt update -y	: to update 
+redhat=yum
+ubuntu=apt
+without update we cant install any pkg in ubuntu
+
+
+apt install git -y
+apt install apache2 -y
+service apache2 start
+service apache2 status
+
+docker p q		: to exit container
+docker ps -a		: to list all containers
+docker attach cont_name	: to go inside container
+docker stop cont_name	: to stop container
+docker start cont_name	: to start container
+docker pause cont_name	: to pause container
+docker unpause cont_name: to unpause container
+docker inspect cont_name: to get complete info of a container
+docker rm cont_name	: to delete a container
+
+HISTORY:
+   1  yum install docker -y
+    2  systemctl start docker
+    3  systemctl status docker
+    4  docker images
+    5  docker container ls
+    6  docker version
+    7  docker pull amazonlinux
+    8  docker images
+    9  docker run -it --name cont1 amazonlinux
+   10  docker container ls
+   11  docker container ls -a
+   12  docker images
+   13  cd /
+   14  du -sh
+   15  cd
+   16  docker pull ubuntu
+   17  docker run -it --name cont2 ubuntu
+   18  docker container ls
+   19  docker container ls -a
+   20  docker attach cont2
+   21  docker container ls -a
+   22  docker ps -a
+   23  docker stop cont2
+   24  docker ps -a
+   25  docker start cont2
+   26  docker ps -a
+   27  docker kill cont2
+   28  docker ps -a
+   29  docker start cont2
+   30  docker ps -a
+   31  docker pause cont2
+   32  docker ps -a
+   33  docker unpause cont2
+   34  docker ps -a
+   35  docker inspect cont2
+   36  docker rm cont2
+   37  docker kill cont2
+   38  docker rm cont2
+   39  docker ps -a
+   40  docker rm cont1
+   41  docker ps -a
+   42  docker run -it --name cont2 ubuntu
+   43  docker ps -a
+   44  docker stop cont2
+   45  docker ps -a
+   46  docker start cont2
+   47  docker kill cont2
+   48  yum install docker -y
+   49  history
+====================================================================================================
+DAY-02:
+
+OS-LEVEL OF VIRTAULIZATION:
+
+docker pull ubuntu
+docker run -it --name cont1 ubuntu
+
+1  apt update -y
+2  apt install apache2 -y
+3  apt install mysql-server -y
+4  apt install default-jre default-jdk -y
+5  touch file{1..5}
+
+docker commit cont1 image1
+docke run -it --name cont2 image1
+
+DOCKERFILE:
+it is an automation way to create image.
+here we use components to create image.
+in Dockerfile D must be Capiatl.
+Components also capital.
+here we can create image directly without container help.
+
+
+COMPONENTS:
+
+FROM		: used to base image
+RUN		: used to run linux commands (image creation)
+CMD		: used to run linux commands (container creation)
+ENTRYPOINT	: high priority than cmd
+COPY		: to copy local files to conatiner
+ADD		: to copy internet files to conatiner
+WORKDIR		: to open req directory
+LABEL		: to add labels for docker file
+ENV		: to set env variables (inside container)
+ARGS		: to pass env variables (outside containers)
+EXPOSE		: to give port number
+
+EX1:
+Vim Dockerfile
+
+FROM ubuntu
+RUN apt update -y
+RUN apt install apache2 -y
+RUN apt install mysql-server -y
+
+To run: docker build -t raham:v1 .
+docker images
+docker run -it --name cont3 raham:v1 
+
+EX-2:
+
+FROM ubuntu
+RUN apt update -y
+RUN apt install apache2 -y
+RUN apt install mysql-server -y
+RUN apt install default-jre default-jdk -y
+
+To run: docker build -t raham:v2 .
+docker images
+docker run -it --name cont4 raham:v2 
+
+EX-3:
+
+FROM ubuntu
+RUN apt update -y
+RUN apt install apache2 -y
+RUN apt install mysql-server -y
+RUN apt install default-jre default-jdk -y
+CMD apt install maven -y
+
+To run: docker build -t raham:v3 .
+docker images
+docker run -it --name cont5 raham:v3
+
+EX-4:
+
+FROM ubuntu
+RUN apt update -y
+RUN apt install apache2 -y
+RUN apt install mysql-server -y
+COPY index.html /tmp
+ADD http://dlcdn.apache.org/tomcat/tomcat-9/v9.0.80/bin/apache-tomcat-9.0.80.tar.gz /tmp
+
+To run: docker build -t raham:v4 .
+docker images
+docker run -it --name cont6 raham:v4
+
+EX-5:
+
+FROM ubuntu
+RUN apt update -y
+RUN apt install apache2 -y
+RUN apt install mysql-server -y
+COPY index.html /tmp
+ADD http://dlcdn.apache.org/tomcat/tomcat-9/v9.0.80/bin/apache-tomcat-9.0.80.tar.gz /tmp
+WORKDIR /tmp
+LABEL author rahamshaik
+
+EX-6:
+
+FROM ubuntu
+RUN apt update -y
+RUN apt install apache2 -y
+RUN apt install mysql-server -y
+COPY index.html /tmp
+ADD http://dlcdn.apache.org/tomcat/tomcat-9/v9.0.80/bin/apache-tomcat-9.0.80.tar.gz /tmp
+WORKDIR /tmp
+LABEL author rahamshaik
+ENV client swiggy
+ENV conatiner appcontainer
+EXPOSE 8080
+
+TO STOP ALL CONTAINERS:
+docker stop $(docker ps -a -q)
+docker rm $(docker ps -a -q)
+
+NETFLIX APP DEPLOYMENT ON CONTAINER:
+
+Vim Dockerfile
+
+FROM ubuntu
+RUN apt-get update -y
+RUN apt-get install apache2 -y
+COPY * /var/www/html/                            : to copy source code   
+CMD ["/usr/sbin/apachectl", "-D", "FOREGROUND"]  : to run apache 
+
+git clone https://github.com/RAHAMSHAIK007/netflix-clone.git
+mv netflix-clone/* .
+
+docker build -t netflix:v1 .
+docker run -itd --name cont1 -p 80:80 netflix:v1
+
+HISTORY:
+
+ 32  yum install docker -y
+   33  docker version
+   34  docker pull ubuntu
+   35  systemctl start docker
+   36  systemctl status docker
+   37  docker pull ubuntu
+   38  docker run -it --name cont1 ubuntu
+   39  docker ps -a
+   40  docker image
+   41  docker ps -a
+   42  docker images
+   43  docker commit cont1 img1
+   44  docker images
+   45  docker run -it --name cont2 img1
+   46  vim Dockerfile
+   47  docker build -t raham:v1 .
+   48  docker images
+   49  docker run -it --name cont3 raham:v1
+   50  vim Dockerfile
+   51  docker build -t raham:v2 .
+   52  docker images
+   53  docker run -it --name cont4 raham:v2
+   54  vim Dockerfile
+   55  docker build -t raham:v3 .
+   56  vim Dockerfile
+   57  docker rmi raham:v3
+   58  docker build -t raham:v3 .
+   59  docker run -it --name cont5 raham:v3
+   60  docker ps -a
+   61  vim Dockerfile
+   62  docker build -t raham:v4 .
+   63  ll
+   64  vim index.html
+   65  docker build -t raham:v4 .
+   66  docker run -it --name cont6 raham:v4
+   67  vim Dockerfile
+   68  dockrer build -t raham:v4 .
+   69  docker build -t raham:v4 .
+   70  docker run -it --name cont7 raham:v4
+   71  docker inspect cont7
+   72  vim Dockerfile
+   73  docker build -t raham:v4 .
+   74  docker run -it --name cont8 raham:v4
+   75  vim Dockerfile
+   76  vim index.html
+   77  docker build -t netflix:v1 .
+   78  docker run -it --name netflix -p 80:81 netflix:v1
+   79  docker run -it --name nfappcont -p 80:82 netflix:v1
+   80  docker ps
+   81  docker ps -a
+   82  docker logs 0f6f6aae0243
+   83  docker ps -a -q
+   84  docker stop $(docker ps -a -q)
+   85  docker ps -a
+   86  docker rm $(docker ps -a -q)
+   87  vim Dockerfile
+   88  docker build -t raham:v9 .
+   89  docker run -itd --name cont1 -p 80:80 raham:v9
+   90  docker ps
+   91  git clone https://github.com/RAHAMSHAIK007/netflix-clone.git
+   92  ll
+   93  vim Dockerfile
+   94*
+   95  ll
+   96  docker build -t raham:v9 .
+   97  docker run -it --name cont2 -p 80:81 raham:v9
+   98*
+   99  docker ps -a
+  100  docker ps -a -q
+  101  docker kill $(docker ps -a -q)
+  102  docker stop $(docker ps -a -q)
+  103  docker rm $(docker ps -a -q)
+  104  docker run -itd --name cont1 -p 80:81 raham:v9
+  105  docker ps -a
+  106  docker run -itd --name cont1 -p 80:82 raham:v9
+  107  docker run -itd --name cont3 -p 80:83 raham:v9
+  108  docker run -itd --name cont3 -p 81:80 raham:v9
+  109  docker run -itd --name raham 84:80 raham:v1
+  110  docker run -itd --name raham1 -p 85:80 raham:v8
+  111  docker run -itd --name cont7 -p 86:80 raham:v9
+  112  docker ps -a
+  113  docker run -itd --name cont2 -p 82:80 raham:v9
+  114  vim Dockerfile
+  115  history
+
+==================================================================================================================
+DAY-03:
+VOLUMES:
+It is used to store data inside container.
+volume is a simple directory inside container.
+containers uses host resources (cpu, ram, rom).
+single volume can be shared to multiple containers.
+ex: cont-1 (vol1)  --- > cont2 (vol1) & cont3 (vol1) & cont4 (vol1)
+at a time we can share single volume to single container only.
+
+METHOD-1:
+DOCKER FILE:
+
+FROM ubuntu
+VOLUME ["/volume1"]
+
+docker build -t raham:v1 .
+docker run -it --name cont1 raham:v1
+cd volume1/
+touch file{1..5}
+cat>file1
+ctrl p q
+
+docker run -it --name cont2 --volumes-from cont1 --privileged=true  ubuntu
+
+METHOD-2:
+FROM CLI:
+
+docker run -it --name cont3 -v volume2 ubuntu
+cd volume1/
+touch java{1..5}
+ctrl p q
+
+docker run -it --name cont4 --volumes-from cont3 --privileged=true ubuntu
+
+METHOD-3: VOLUME MOUNTING
+
+docker volume ls 		: to list volumes
+docker volume create name	: to create volume
+docker volume inspect volume3	: to get info of volume3
+cd /var/lib/docker/volumes/volume3/_data 
+touch python{1..5}
+docker run -it --name cont5 --mount source=volume3,destination=/volume3 ubuntu
+docker volume rm 	: to delete volumes
+docker volume prune	: to delete unused volumes
+
+HOST -- > CONTAINER:
+
+cd /root
+touch raham{1..5}
+docker volume inspect volume4
+cp * /var/lib/docker/volumes/volume4/_data
+docker attach cont6 
+ls /volume4
+
+DOCKER SYSTEM COMMANDS:
+used to know complete info about the docker elements
+
+docker system df : to give info of docker objects
+docker system df -v
+docker inspect cont4 | grep volume -i
+docker inspect cont5 | grep volume -i
+docker system prune : to remove unused objects of docker
+
+DOCKER MEMORY MANAGEMENT:
+conatiners uses our host resources (cpu, mem)
+by default we dont have any limits for containers
+we need to set it
+docker run -itd --name cont3 --memory="200mb" --cpus="0.2" ubuntu
+docker inspect cont3
+docker stats
+
+HISTORY:
+
+ 1  yum install docker -y
+    2  docker version
+    3  docker pull ubuntu
+    4  systemctl start docker
+    5  systemctl status docker
+    6  ll
+    7  rm -rf *
+    8  vim Dockerfile
+    9  docker build -t raham:v1 .
+   10  docker run -it --name cont1 raham:v1
+   11  docker ps -a
+   12  docker run -it --name cont2 --volumes-from cont1 --privileged=true  ubuntu
+   13  docker run -it --name cont3 -v volume2 ubuntu
+   14  docker run -it --name cont4 --volumes-from cont3 --privileged=true ubuntu
+   15  docker kill $(docker ps -a -q)
+   16  docker rm $(docker ps -a -q)
+   17  docker volume rm volume1 volume2
+   18  docker volume rm volume1
+   19  docker volume
+   20  docker volume ls
+   21  docker volume rm 1636d0d0813d5ccf074d052c21e74c8359290ef07b10b9da8f3dd2f4bf156b7a
+   22  docker volume rm 66584189205bf6c28c44fa648de2a4ef26f024cfb500ab646076cd4118d070d6
+   23  vim Dockerfile
+   24  docker build -t raham:v1 .
+   25  docker run -it --name cont1 raham:v1
+   26  docker run -it --name cont2 --volumes-from cont1 --privileged=true  ubuntu
+   27  docker run -it --name cont3 -v volume2 ubuntu
+   28  docker run -it --name cont4 --volumes-from cont3 --privileged=true ubuntu
+   29  docker volume ls
+   30  docker volume create volume3
+   31  docker volume ls
+   32  docker volume inspect volume3
+   33  cd /var/lib/docker/volumes/volume3/_data
+   34  touch python{1..5}
+   35  ll
+   36  docker run -it --name cont5 --mount source=volume3,destination=volume3 ubuntu
+   37  docker run -it --name cont5 --mount source=/volume3,destination=/volume3 ubuntu
+   38  dockrer volume ls
+   39  dockre volume ls
+   40  docker volume ls
+   41  docker run -it --name cont5 --mount source=volume3, destination=volume3 ubuntu
+   42  docker run -it --name cont5 --mount source=volume3 destination=volume3 ubuntu
+   43  docker run -it --name cont5 --mount "source=volume3,destination=volume3" ubuntu
+   44  docker run -it --name cont5 --mount source=volume3,destination=/volume3 ubuntu
+   45  ll
+   46  touch python{6..10}
+   47  docker attach cont5
+   48  docker volume create volume4
+   49  docker volume inspect volume4
+   50  cd /var/lib/docker/volumes/volume4/_data
+   51  touch php{1..5}
+   52  ll
+   53  docker run -it --name cont6 --mount source=volume4,destination=/volume4 ubuntu
+   54  docker attach cont6
+   55  ll
+   56  docker volume ls
+   57  cd
+   58  ll
+   59  pwd
+   60  touch raham{1..5}
+   61  ll
+   62  docker inspect volume4
+   63  cp * /var/lib/docker/volumes/volume4/_data
+   64  cd /var/lib/docker/volumes/volume4/_data
+   65  ll
+   66  docker attach cont6
+   67  pwd
+   68  cd
+   69  docker system -v
+   70  docker system df
+   71  docker system df -v
+   72  docker inspect cont4 | grep -i volume
+   73  docker inspect cont3 | grep -i volume
+   74  docker inspect cont6 | grep -i volume
+   75  docker volume create volume5
+   76  docker pull amazonlinux
+   77  docker system prune
+   78  docker kill $(docker ps -a -q)
+   79  docker system prune
+   80  docker run -itd --name cont1 ubuntu
+   81  docker inspect cont1
+   82  docker run -itd --name --memory="100mb" --cpus="0.1" cont2 ubuntu
+   83  docker run -itd --name cont2 --memory="100mb" --cpus="0.1" ubuntu
+   84  docker inspect cont2
+   85  docker run -itd --name cont3 --memory="200mb" --cpus="2" ubuntu
+   86  docker run -itd --name cont3 --memory="200mb" --cpus="0.2" ubuntu
+   87  docker inspect cont3
+   88  docker stats
+   89  docker attach cont6
+   90  history
+==================================================================================================
+
+DOCKER COMPOSE:
+it is tool used to create multiple containers at same time.
+within single host we can lauch these containers.
+we need to write compose file for this.
+compose file is on yaml format.
+inside compose file we wrirte images, volumes, ports ---
+
+vim Dockerfile
+
+FROM ubuntu
+RUN apt update -y
+RUN apt install apache2 -y
+COPY index.html /var/www/html
+CMD ["/usr/sbin/apachectl", "-D", "FOREGROUND"]
+
+INDEX.HTML: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_form_icon
+
+docker build -t movies:v1 .
+docker run -itd --name movies -p 81:80 movies:v1
+
+NOTE: do all of these servivces maually
+
+docker kill $(docker ps -a -q)
+docker rm $(docker ps -a -q)
+
+vim docker-compose.yml
+
+version: '3'
+services:
+  movies:
+    image: movies:v1
+    ports:
+      - "81:80"
+  train:
+    image: train:v1
+    ports:
+      - "82:80"
+  dth:
+    image: dth:v1
+    ports:
+      - "83:80"
+  recharge:
+    image: recharge:v1
+    ports:
+      - "84:80"
+
+
+docker-compose up -d		: to create and start containers
+docker-compose down		: to stop and delete
+docker-compose stop		: to stop the containers
+docker-compose kill		: to kill the containers
+docker-compose start		: to start the containers
+docker-compose pause		: to pause the containers
+docker-compose unpause		: to unpause the containers
+docker-compose ps		: to show the containers created with compose file
+docker-compose logs		: to show compose logs
+docker-compose images		: to show images used for compose
+
+DOCKER-COMPOSE DEFAULT FILE CHANGE:
+Supported filenames: docker-compose.yml, docker-compose.yaml, compose.yml, compose.yaml
+mv docker-compose raham.yml 
+docker-compose -f raham.yml up -d
+
+
+ADV:
+we can launch multiple containers
+we can manage multiple containers
+we can resue the compose file
+we can eleimate the manual work
+
+
+DOCKER-HUB:
+it is used to store images on internet base platfrom.
+we can push our images to dockerhub.
+image is going to compress while we upload to docker hub
+once you upload image on docker hub u can use image from anywhere
+
+create a account
+create a repo
+
+docker login
+docker tag movies:v1 vinodvanama/paytmmovies
+docker push vinodvanama/paytmmovies
+
+HISTORY:
+ 47  2023-09-13 13:06:53 docker ps -a
+   48  2023-09-13 13:07:24 vim index.html
+   49  2023-09-13 13:07:50 docker build -t train:v1 .
+   50  2023-09-13 13:08:12 docker run -itd --name train -p 82:80 train:v1
+   51  2023-09-13 13:08:49 vim index.html
+   52  2023-09-13 13:09:01 docker build -t dth:v1 .
+   53  2023-09-13 13:09:15 docker run -itd --name dth -p 83:80 dth:v1
+   54  2023-09-13 13:09:34 vim index.html
+   55  2023-09-13 13:09:57 docker build -t recharge:v1 .
+   56  2023-09-13 13:10:15 docker run -itd --name recharge -p 84:80 recharge:v1
+   57  2023-09-13 13:12:41 docker kill $(docker ps -a -q)
+   58  2023-09-13 13:12:46 docker rm $(docker ps -a -q)
+   59  2023-09-13 13:12:50 docker ps -a
+   60  2023-09-13 13:12:58 vim docker-compose.yml
+   61  2023-09-13 13:16:36 docker version
+   62  2023-09-13 13:17:31 docker-compose up -d
+   63  2023-09-13 13:17:40 docker ps
+   64  2023-09-13 13:19:11 cat Dockerfile
+   65  2023-09-13 13:21:44 docker ps
+   66  2023-09-13 13:22:01 docker-compose down
+   67  2023-09-13 13:22:47 docker-compose up -d
+   68  2023-09-13 13:22:56 docker ps -a
+   69  2023-09-13 13:23:35 docker-compose stop
+   70  2023-09-13 13:23:59 docker-compose start
+   71  2023-09-13 13:24:34 docker ps
+   72  2023-09-13 13:24:41 docker-compose pause
+   73  2023-09-13 13:24:46 docker ps
+   74  2023-09-13 13:24:52 docker-compose unpause
+   75  2023-09-13 13:25:40 docker run -itd --name cont1 ubuntu
+   76  2023-09-13 13:25:43 docker run -itd --name cont2 ubuntu
+   77  2023-09-13 13:25:48 docker run -itd --name cont3 ubuntu
+   78  2023-09-13 13:25:52 docker run -itd --name cont4 ubuntu
+   79  2023-09-13 13:26:01 docker ps
+   80  2023-09-13 13:26:29 docker-compose ps
+   81  2023-09-13 13:26:50 docker-compose logs
+   82  2023-09-13 13:27:46 docker-compose images
+   83  2023-09-13 13:27:56 docker images
+   84  2023-09-13 13:28:54 vim docker-compose.yml
+   85  2023-09-13 13:29:55 mv docker-compose.yml raham.yml
+   86  2023-09-13 13:30:02 docker-compose ps
+   87  2023-09-13 13:31:03 docker-compose -f raham.yml down
+   88  2023-09-13 13:31:21 docker-compose up -d
+   89  2023-09-13 13:31:34 docker-compose -f raham.yml up -d
+   90  2023-09-13 13:37:32 docker images
+   91  2023-09-13 13:41:55 docker login
+   92  2023-09-13 13:42:27 docker images
+   93  2023-09-13 13:43:10 docker tag movies:v1 vinodvanama/paytmmovies
+   94  2023-09-13 13:43:11 docker images
+   95  2023-09-13 13:43:22 docker push vinodvanama/paytmmovies
+   96  2023-09-13 13:45:32 docker images
+   97  2023-09-13 13:46:09 docker tag train:v1 vinodvanama/paytmtrain
+   98  2023-09-13 13:46:18 docker push vinodvanama/paytmtrain
+   99  2023-09-13 13:47:07 docker tag dth:v1 vinodvanama/paytmdth:v1
+  100  2023-09-13 13:47:23 docker push vinodvanama/paytmdth:v1
+  101  2023-09-13 13:48:30 docker tag recharge:v1 vinodvanama/paytmrecharge:v1
+  102  2023-09-13 13:48:39 docker push vinodvanama/paytmrecharge:v1
+  103  2023-09-13 13:49:28 docker kill $(docker ps -a -q)
+  104  2023-09-13 13:49:34 docker rm $(docker ps -a -q)
+  105  2023-09-13 13:49:58 docker rmi $(docker images -q)
+  106  2023-09-13 13:50:09 docker rmi $(docker images -f)
+  107  2023-09-13 13:50:20 docker rmi -f $(docker images -q)
+  108  2023-09-13 13:50:25 docker images
+  109  2023-09-13 13:50:27 docker ps
+  110  2023-09-13 13:50:30 docker ps -a
+  111  2023-09-13 13:51:04 docker run -itd --name cont1 -p 81:80 vinodvanama/movies:latest
+  112  2023-09-13 13:51:14 docker run -itd --name cont1 -p 81:80 vinodvanama/paytmmovies:latest
+  113  2023-09-13 13:52:38 docker run -itd --name cont2 -p 82:80 vinodvanam/paytmtrain:latest
+  114  2023-09-13 13:52:48 docker run -itd --name cont2 -p 82:80 vinodvanama/paytmtrain:latest
+  115  2023-09-13 13:52:57 docker ps -a
+  116  2023-09-13 13:55:32 docker top cont1
+  117  2023-09-13 13:55:47 docker stats
+  118  2023-09-13 13:58:33 history
+  119  2023-09-13 13:59:02 export HISTTIMEFORMAT="%F %T "
+  120  2023-09-13 13:59:09 history
+
+ASSIGNMENT:
+install webserver, app server, db server on conatiner
+in amutomation way.
+create 5 services and lauch them automatically on sigle host.
+upload to docker hub.
+========================
+
+DOCKER SWARM:
+it is a high avalibilty method to make our application run efficiently.
+cluster = group of servers
+
+we can run same comtainer on multiple servers.
+docker swarm manger is going to distribute conatiners to workernodes.
+docker engine is responsible for creating cluster.
+inside cluster we create services.
+in swarm cluster conatiners are self-healed.
+
+SETUP: 
+CREATE 3 SERVERS (1=MANAGER, 2=WORKER)
+sudo -i
+hostnamectl set-hostname manager/worker-1/worker-2
+sudo -i
+
+yum install docker -y
+systemctl start docker
+systemctl status docker
+
+DOCKER MANAGER NODE:
+docker swarm init 
+copy token to worker nodes
+docker node ls
+
+Note: Make sure you allow all traffic in security group.
+
+SERVICES:
+to copy the container to worker nodes we need to create services.
+service -- > container -- > app
+service is a way of exposing app.
+we can manage multiple conatiners with help of services.
+
+docker service create --name train --repliacs 6 -p 81:80 vinodvanama/paytmtrain:latest
+docker service ls
+docker service scale movies=10
+docker service ps movies
+docker service scale movies=4
+docker service inspect movies
+docker service rollback movies
+docker service logs movies
+
+TO DETACH NODE FROM CLUSTER:
+go to worker node
+docker swarm leave
+if you want to add again: copy the token again
+
+TO REMOVE THE WORKR NODE COMPLETELY:
+docker node rm id(node) -- > run this on manager
+
+docker swarm join-token manager : to retive the token of manager
+
+
+DOCKER NETWORK:
+Docker networks are used to make a communication between the multiple containers that are running on same or different docker hosts. We have different types of docker networks.
+Bridge Network
+Host Network
+None network
+Overlay network
+
+BRIDGE NETWORK: It is a default network that container will communicate with each other within the same host.
+
+HOST NETWORK: When you Want your container IP and ec2 instance IP same then you use host network
+
+NONE NETWORK: When you don’t Want The container to get exposed to the world, we use none network. It will not provide any network to our container.
+
+OVERLAY NETWORK: Used to communicate containers with each other across the multiple docker hosts.
+
+Note: stop before remove
+
+COMMANDS:
+docker network create paytm
+docker network ls
+docker network inspect paytm
+docker network connect paytm cont1
+docker network connect paytm cont2
+docker exec cont1 sudo apt update -y
+docker exec cont1 sudo apt install iputils-ping -y
+docker exec cont1 ping ip-cont2
+
+HISTORY:
+1  yum install docker -y
+    2  systemctl start docker
+    3  systemctl status docker
+    4  docker swarm init
+    5  docker node ls
+    6  docker run -itd --name cont1 -p 80:80 vinodvanama/paytmmovies:latest
+    7  docker ps
+    8  docker kill cont1
+    9  docker rm cont1
+   10  docker service create --name movies --replicas 3 -p 80:80 vinodvanama/movies:latest
+   11  docker service create --name movies --replicas 3 -p 80:80 vinodvanama/paytmmovies:latest
+   12  docker kill $(docker ps -a -q)
+   13  docker service ls
+   14  docker service rm movies
+   15  docker service create --name movies --replicas 3 -p 80:80 vinodvanama/paytmmovies:latest
+   16  docker ps -a
+   17  docker service create --name train --repliacs 6 -p 81:80 vinodvanama/paytmtrain:latest
+   18  docker service create --name train --replicas 6 -p 81:80 vinodvanama/paytmtrain:latest
+   19  docker servive ls
+   20  docker service ls
+   21  docker service movies scale=10
+   22  docker service movies --scale=10
+   23  docker service scale movies=10
+   24  docker service ls
+   25  docker service ps movies
+   26  docker service movies scale=4
+   27  docker service scale movies=4
+   28  docker service ls
+   29  docker service inspect movies
+   30  docker service
+   31  docker service rollback movies
+   32  docker service update movies
+   33  docker service logs movies
+   34  docker service rm  movies
+   35  docker service ls
+   36  docker node ls
+   37  docker swarm rm i7pseueexeui5jwzw8f43ff7u
+   38  docker node rm i7pseueexeui5jwzw8f43ff7u
+   39  docker node ls
+   40  docker node rm vacadmz0bmuwsho80re0ht70a
+   41  docker node rm xrbaq93t5jzgha8dw1vogt5lo
+   42  docker node ls
+   43  docker node rm sxl0x677yx6qpo4pwpz6q49x7
+   44  docker node ls
+   45  docker swarm init
+   46  docker swarm init joint-token
+   47  docker swarm init
+   48  docker swarm
+   49  docker swarm join-token
+   50  docker swarm manager join-token
+   51  docker swarm join-token join-token
+   52  docker swarm join-token manager
+   53  docker network ls
+   54  docker network create paytm
+   55  docker network ls
+   56  docker network inspect raham
+   57  docker network inspect paytm
+   58  docker serice rm train
+   59  docker service rm train
+   60  docker ps -a
+   61  docker run -itd --name cont1 -p 80:80 vinodvanama/paytmmovies:latest
+   62  docker run -itd --name cont2 -p 81:80 vinodvanama/paytmtrain:latest
+   63  docker ps
+   64  docker inspect cont1 | grep -i network
+   65  docker network attach paytm cont1
+   66  docker network connect paytm cont1
+   67  docker inspect cont1 | grep -i network
+   68  docker inspect network paytm
+   69  docker network connect paytm cont2
+   70  docker inspect network paytm
+   71  docker attach cont2
+   72  docker ps
+   73  docker network connect paytm cont2
+   74  docker inspect network paytm
+   75  docker run -itd --name cont2 -p 81:80 vinodvanama/paytmtrain:latest
+   76  docker ps -a
+   77  docker start cont2
+   78  docker attach cont2
+   79  docker rm cont2
+   80  docker run -itd --name cont2 -p 81:80 vinodvanama/paytmtrain:latest
+   81  docker network connect paytm cont2
+   82  docker ps -a
+   83  docker network inspect paytm
+   84  docker attach cont1
+   85  docker ps -a
+   86  docker swarm leave --force
+   87  docker node ls
+   88  docker ps -a
+   89  docker rm cont1
+   90  docker run -itd --name cont1 -p 80:80 vinodvanama/paytmmovies:latest
+   91  docker network connect paytm cont1
+   92  docker network inspect paytm
+   93  docker attach cont1
+   94  docker start cont1
+   95  docker ps -a
+   96  docker exec cont1 --sh ls
+   97  docker exec cont1  ls
+   98  docker exec cont1 ping 172.19.0.3
+   99  docker exec cont1 sudo yum update -y
+  100  docker exec cont1 apt update -y
+  101  docker exec cont1 apt install iputils -y
+  102  docker exec cont1 apt install ip-utils -y
+  103  docker exec cont1 apt install iputils-ping -y
+  104  docker exec cont1 ping 172.19.0.3
+  105  history
+========================================================

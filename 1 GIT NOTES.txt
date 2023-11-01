@@ -1,0 +1,415 @@
+DAY-01: 12-08-2023
+INTRO, STAGES, HISTORY COMMANDS
+
+GIT: GLOBAL INFORMATION TRACKER
+WHY: To store and track the code.
+
+git = vcs, scm 
+
+v-1: phots --- > 100 lines
+v-2: msg   --- > 100 + 50 lines = 150
+v-3: reels --- > 150 + 50 lines = 200
+
+vcs = it will store and track each version code separately.
+why to store the code: rollback 
+rollback: means going back to the previous version.
+
+
+DVCS: Distributed version control system
+we can store code on multiple repos.
+ex: Git
+
+CVCS: Centralized version control system
+we can store code on single repos.
+ex: Svn
+
+STAGES OF GIT:
+Working directory: we write our code here.
+staging area: we track our code here.
+repo: we store our tracked code here. (.git)
+
+
+note: without tracking we cant store the code on repo.
+create ec2-instance
+sudo -i
+mkdir paytm
+cd paytm
+
+yum install git -y   #to install git
+git init 	     #to initialize .git
+
+touch index.html: to create a file
+git status: to check file is tracking or not
+git add: to track the file
+git commit -m "v-1" index.html: to store the index.html 
+git log: to show the commits
+
+
+DAY-02: 14-02-2023
+
+
+APP: a group of services.
+who will develop the application:
+developers (frontend, backend, db)
+
+what to do: write the code 
+where to store: git
+
+
+
+GIT LOGS: used to check the commits history.
+the latest commit will be on top (LIFO).
+
+
+git log			: shows the commits 
+git log --oneline	: shows the commits on oneline
+git log --oneline -2	: shows last 2 commits
+git show commit_id	: shows files committed to that commit_id
+
+GIT CONFIGURE:
+git config user.name "raham"
+git config user.email "raham@gmail.com"
+
+HISTORY:
+ 1  mkdir paytm
+    2  cd paytm/
+    3  yum install git -y
+    4  git init
+    5  ls -al
+    6  git status
+    7  cd ..
+    8  git status
+    9  ls -al
+   10  cd paytm/
+   11  vim index.html
+   12  git status
+   13  git add index.html
+   14  git status
+   15  git commit -m "commit-1" index.html
+   16  git status
+   17  touch recharge.java
+   18  git status
+   19  git add recharge.java
+   20  git status
+   21  git commit -m "commit-2" recharge.java
+   22  ll
+   23  git status
+   24  touch raham
+   25  git add raham
+   26  git commit -m "raham commits" raham
+   27  git log
+   28  git log --oneline
+   29  git log --oneline -2
+   30  git log --oneline -1
+   31  git show 1e06d41
+   32  touch python{1..10}
+   33  git status
+   34  git add p*
+   35  git status
+   36  git commit -m "backedn files" p*
+   37  git log
+   38  git log --oneline
+   39  git log --oneline -1
+   40  git show 460311a
+   41  git log
+   42  git config user.name "raham"
+   43  git config user.email  "raham@gmail.com"
+   44  git log
+   45  touch php
+   46  git add php
+   47  git commit -m "php file" php
+   48  git log
+   49  git config user.name "sohail"
+   50  git config user.email "soggade@gmail.com"
+   51  git log
+   52  touch sohail
+   53  git add sohail
+   54  git commit -m "shoail" sohail
+   55  git log
+   56  history
+
+======================================
+DAY-03: 16-08-2023
+
+
+GIT BRANCHES:
+it is an individaul line used to develope the code.
+it will track the code seperately for each service.
+local (.git) --- > central (github)
+the default branch in git is master.
+Note: without commit we cannot see the branch.
+
+
+git branch			: to show list of branch
+git branch branch_name		: to create a branch
+git checkout branch_name	: to switch from one branch to branch
+git checkout -b branch_name	: to create and switch at same time
+git branch -m old new		: to rename a branch
+git branc -D branch_name	: to delete a branch
+
+
+GITHUB:
+it is a central repo where we place soure code.
+we can access github from anywhere with internet.
+to store code we need to create account.
+
+note: it will not accept passwords, it will accept only tokens.
+token will be visible only once.
+account -- > settings -- > developer settings -- > PAT -- > classic -- > genererate -- > classic 
+
+create a repo
+run below command to connect with github:
+git remote add origin https://github.com/srinivasnaiduarja/paytm.git
+git push origin branch_name 
+username:
+password: token
+
+
+git clone: use to copy the code to local
+git clone https://github.com/srinivasnaiduarja/paytm.git
+
+HISTORY:
+
+ 1  mkdir paytm
+    2  cd paytm/
+    3  yum install git -y
+    4  ls -al
+    5  git init
+    6  ls -al
+    7  git branch
+    8  touch index.html
+    9  git status
+   10  git add index.html
+   11  git status
+   12  git config user.name "raham"
+   13  git config user.email "raham@gmail.com"
+   14  git commit -m "commit-1" index.html
+   15  git branch
+   16  git branch movie
+   17  git branch
+   18  git checkout movie
+   19  git branch
+   20  ll
+   21  touch movies{1..5}
+   22  git add movies*
+   23  git commit -m "dev-1" movies*
+   24  ls -al
+   25  git remote add origin https://github.com/srinivasnaiduarja/paytm.git
+   26  git push origin movie
+   27  ll
+   28  git branch
+   29  git branch train
+   30  git branch
+   31  git checkout train
+   32  ll
+   33  touch train{1..5}
+   34  git add train*
+   35  git commit -m "dev-2" train*
+   36  git push origin train
+   37  git branch
+   38  git checkout -b dth
+   39  git branch
+   40  ll
+   41  touch dth{1..5}
+   42  git add dth*
+   43  git commit -m "dev-3" dth*
+   44  git push origin dth
+   45  git checkout -b recharge
+   46  git branch
+   47  touch recharge{1..5}
+   48  git add recharge*
+   49  git commit -m "dev-4" recharge*
+   50  git push origin recharge
+   51  cd
+   52  ll
+   53  rm -rf *
+   54  ll
+   55  git status
+   56  git clone https://github.com/srinivasnaiduarja/paytm.git
+   57  ll
+   58  cd paytm/
+   59  git branch
+   60  ll
+   61  git checkout train
+   62  ll
+   63  git branch
+   64  git checkout dth
+   65  ll
+   66  git checkout recharge
+   67  ll
+   68  git branch
+   69  git branch -m recharge abc
+   70  git branch
+   71  git branch -m abc recharge
+   72  git branch
+   73  git branch -D train
+   74  git branch
+   75  git pull origin train
+   76  git branch
+   77  git checkout -b train
+   78  git branch
+   79  ll
+   80  git branch -D train
+   81  git checkout recharge
+   82  git branch -D train
+   83  git checkout -b train
+   84  ll
+   85  touch abcd
+   86  git commit -m "abc" abcd
+   87  git add abcd
+   88  git push origin recharge
+   89  history
+   90  git branch
+   91  ll
+   92  history
+========================================================
+
+DAY-03:
+
+GIT MERGE: used to merge files blw two branches.
+git merge branch_name
+
+git checkout master
+git merge movies
+
+GIT REBASE: used to merge files blw two branches.
+
+
+MERGE VS REBASE:
+merge will show files, but rebase will not show.
+merge will not show the branch, but rebase will show.
+merge will store the entire history, but rebase will not show.
+
+
+GIT REVERT: used to undo merging blw branches.
+git revert branch_name
+
+
+GIT PULL: it will get the files form github to git
+
+=======================================================
+
+
+git clone: use to copy repo to local 
+git clone https://github.com/srinivasnaiduarja/paytm.git
+
+git push: to send code form local to GitHub
+git push origin master
+
+git pull: to get code from GitHub to local 
+git push origin master
+
+git fetch: it shows changes from GitHub to git 
+git fetch
+
+
+================================================
+
+git stash: used to hide the files which are not committed.
+to save our work temeperorly.
+
+
+git stash	: to hide
+git stash list	: to list the stashes
+git stash apply	: to get the file back
+git stash clear	: to delete stashes
+git stash pop	: to delete latest stash
+
+
+=======================================================
+
+CHERRY-PICK: getting files from specific commits
+git cherry-pick commit_id
+
+cherrypick vs merge: 
+
+merge will add all files.
+cherrypick will add specific files.
+
+
+GIT RESTORE: used to untrack the file.
+git restore --staged raham
+
+history:
+   1 mkdir paytm
+   2  cd paytm/
+    3  yum install git -y
+    4  git init
+    5  ll
+    6  git clone https://github.com/RAHAMSHAIK007/10-30amnew.git
+    7  ll
+    8  cd 10-30amnew/
+    9  ll
+   10  cat index.html
+   11  git pull origin main
+   12  cat index.html
+   13  git pull origin main
+   14  cat index.html
+   15  git fetch
+   16  cat index.html
+   17  git pull origin main
+   18  ll
+   19  cd
+   20  rm -rf *
+   21  mkdir paytm
+   22  cd paytm/
+   23  touch index.html
+   24  git add index.html
+   25  git init
+   26  git add index.html
+   27  git commit -m "commit-1" index.html
+   28  ll
+   29  touch java
+   30  git add java
+   31  ll
+   32  git stash
+   33  ll
+   34  git stash list
+   35  git stash apply
+   36  ll
+   37  git stash list
+   38  git stash clear
+   39  ll
+   40  git stash list
+   41  ll
+   42  git stash
+   43  ll
+   44  git stash list
+   45  git stash apply
+   46  ll
+   47  git stash apply
+   48  git stash list
+   49  git stash clear
+   50  git stash list
+   51  git branch
+   52  git checkout -b branch1
+   53  touch java{1..5}
+   54  git add java*
+   55  git commit -m "java-commits" java*
+   56  touch python{1..5}
+   57  git add python*
+   58  git commit -m "python-commits" python*
+   59  touch php{1..5}
+   60  git add php*
+   61  git commit -m "php-commits" php*
+   62  ls
+   63  git log --oneline
+   64  git checkout master
+   65  git cherry-pick 9af3cae
+   66  ls
+   67  git cherry-pick 8323e96
+   68  git cherry-pick 9c7a377
+   69  touch raham
+   70  git status
+   71  git add raham
+   72  git status
+   73  git restore --staged raham
+   74  git status
+   75  git add raham
+   76  git status
+   77  git restore --staged raham
+   78  git status
+   79  ll
+   80  vim index.html
+   81  git status
+   82  history

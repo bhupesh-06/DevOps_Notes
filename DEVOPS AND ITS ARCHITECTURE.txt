@@ -1,0 +1,137 @@
+WHY DEVOPS:
+To deliver application very speedly.
+
+SDLC: software development lifecycle.
+
+DEPLOYMENT: Process of installing application in server.
+
+
+
+
+==========================================================================
+
+SOFTWARE ARCHITECTURES:
+1. ONE-TIER 
+2. TWO-TIER
+3. THREE-TIER
+4. N-TIER
+
+TIER: SERVER: LAYER
+
+SERVER: servers the services to the end user.
+1. web server: 
+2. app server:
+3. db server:
+
+
+WEB SERVER:
+it is also called as the presentation layer.
+to show the application.
+who works: ui/ux developers
+what they use: web technologies
+ex: html, css, js
+
+APP SERVER: 
+To use the application.
+also called the logic layer
+who work: backend developers
+what they use: programming
+ex: java, python, c, c++, .net, go --------
+
+
+DB SERVER:
+It also called as db layer.
+To store & retrieve data.
+who work: db admins
+what they use: db languages
+ex: sql, oracle, postgres, arango ----
+
+ONE-TIER ARCHITECTURE: STANDALONE APPLICATION
+THE APP WILL WORK ON A LOCAL LAPTOP.
+ALL LAYERS WILL BE ON LOCALLY.
+IT WILL NOT REQ ANY INTERNET CONNECTION.
+EX: VLC MEDIA PLAYER
+
+
+TWO-TIER ARCHITECTURE: CLIENT-SERVER APPLICATION
+THE APP WILL WORK ON A LOCAL LAPTOP.
+LOCAL: PRESENTATION, LOGIC    DB: INTERNET 
+IT WILL REQ ANY INTERNET CONNECTION.
+EX: BANKING APPLICATIONS
+
+
+THREE-TIER: WEB APPLICATION (REALTIME)
+APPLICATION NO NEED TO BE ON LOCAL.
+EVERYTHING WE CAN USE FROM THE INTERNET.
+EX: WHATSAPP, YOUTUBE, INSTA -----
+
+
+==========================================================
+
+AGENDA: CREATE A WEBSERVER AND SHOW THE LIVE ENV 
+SERVER: SERVER SERVS THE SERVICES TO END USER.
+WEB SERVER: TO SHOW THE APPLICATION
+
+TO CREATE SERVER WE NEED TO HAVE CLOUD ACCOUNT.
+AWS: EC2 INSTANCES = ELASTIC COMPUTE CLOUD
+
+TO CREATE EC2 WE NEED TO PERFORM 7 STEPS:
+
+SERVER = COMPUTER
+1. TAGS = NAME
+2. AMI = OS, SOFTWARE PACKAGES
+3. INSTANCE_TYPE = CPU & RAM
+4. KEY_PAIR = LOGIN (public=aws, private=user)
+5. NETWORK = VPC, SECURITY GROUPS (port numbers=0-65535)
+6. STORAGE = 8 GB - 16 TB
+7. SUMMARY = TO REVIEW 
+
+SSH= SECURE SHELL (22) - TO COMMUNICATE WITH SERVERS
+
+===========================================================
+
+OS = USED TO COMMUNICATE WITH SERVERS.
+
+TYPES:
+1. WINDOWS
+2. LINUX
+3. MACOS
+
+WHY TO USE LINUX:
+SMART PHONE
+SUPER COMPUTER
+SMART WATCHES/TVS
+
+ADVANTAGES:
+1. FREE AND OPEN SOURCE
+2. SECURITY
+3. PERFOMANCE IS TOO GOOD.
+4. MULTI USER BASED.
+5. MULTI TASKING.
+
+MODES:
+1. GUI	: GRAPHICAL USER INTERFACE
+2. CLI	: COMMAND LINE INTERFACE
+
+COMMANDS:
+sudo -i		: to switch from ec2-user to root user
+sudo su -	: to switch from ec2-user to root user
+sudo su		: to switch from ec2-user to root user
+logout (ctrl d)	: to switch from root to ec2-user
+cat /proc/cpuinfo: to show cpu information
+lscpu: to show cpu information
+cat /proc/meminfo: to show memory information
+lsmem: to show memory information
+fdisk -l: to show the volume information
+lsblk: to show the volume information
+ifconfig/ ip addr/ ip addr show/ hostname -i: to show ip address
+clear (ctrl l): to clear the screen
+
+
+
+
+
+
+
+
+
